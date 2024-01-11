@@ -15,6 +15,7 @@ app.get('/', async (req, res) => {
   } catch (error) {
     console.error('Erro ao executar a consulta', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
+    console.error(error)
   }
 });
 
