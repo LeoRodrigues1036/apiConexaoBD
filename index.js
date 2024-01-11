@@ -11,7 +11,7 @@ const pool = new Pool({
 async function getPostgresVersion() {
   const client = await pool.connect();
   try {
-    const response = await client.query('SELECT version()');
+    const response = await client.query('SELECT * FROM produtos');
     console.log(response.rows[0]);
   } finally {
     client.release();
