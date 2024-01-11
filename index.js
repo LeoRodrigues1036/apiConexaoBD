@@ -1,26 +1,21 @@
-const express = require('express');
 const { Pool } = require('pg');
-
-const app = express();
-const port = process.env.PORT || 3000;
+require('dotenv').config();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true,
+  },
 });
 
-app.get('/', async (req, res) => {
+async function getPostgresVersion() {
+  const client = await pool.connect();
   try {
-    const result = await pool.query('SELECT * FROM produtos');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Erro ao executar a consulta', error);
-    res.status(500).json({ error: 'Erro interno do servidor' });
-    console.error(error)
+    const response = await client.query('SELECT version()');
+    console.log(response.rows[0]);
+  } finally {
+    client.release();
   }
-});
+}
 
-// Outras rotas podem ser adicionadas conforme necessário
-
-app.listen(port, () => {
-  console.log(`Servidor está rodando na porta ${port}`);
-});
+getPostgresVersion();
