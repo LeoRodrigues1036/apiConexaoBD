@@ -12,7 +12,7 @@ const pool = new Pool({
   },
 });
 
-app.get('/', async (req, res) => {
+app.get('/api/dados', async (req, res) => {
   try {
     const client = await pool.connect();
     const response = await client.query('SELECT * FROM produtos');
