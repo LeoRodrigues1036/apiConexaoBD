@@ -1,42 +1,18 @@
-const express = require('express');
-const { Client } = require('pg');
-const cors = require('cors');
+const { Pool } = require('pg');
 
-const app = express();
-const port = 3001;
+const connectionString = 'postgresql://LeoRodrigues1036:************@ep-winter-cell-78315372.us-east-2.aws.neon.tech/BancoDeDados?sslmode=require';
 
-
-// Configuração do banco de dados PostgreSQL
-const client = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: 'artigo71',
-  port: 5432,
+const pool = new Pool({
+  connectionString: connectionString,
 });
 
-client.connect();
-
-// Middleware CORS
-app.use(cors());
-
-// Rota para obter dados do banco de dados
-app.get('/api/dados', async (req, res) => {
-  try {
-    const result = await client.query('SELECT * FROM premios');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Erro ao obter dados do banco de dados', error);
-    res.status(500).json({ error: 'Erro ao obter dados do banco de dados' });
+// Agora você pode usar o objeto `pool` para realizar consultas.
+pool.query('SELECT * FROM produtos', (err, res) => {
+  if (err) {
+    console.error('Erro ao executar a consulta', err);
+  } else {
+    console.log('Resultado da consulta:', res.rows);
   }
-});
-
-// Encerra a conexão do cliente PostgreSQL quando o aplicativo é encerrado
-process.on('SIGINT', () => {
-  client.end();
-  process.exit();
-});
-
-app.listen(port, () => {
-  //console.log(`Servidor está rodando na porta ${port}`);
+  // Encerrar a conexão após a consulta
+  pool.end();
 });
