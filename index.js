@@ -61,7 +61,7 @@ app.get('/api/dadosRoupas', async (req, res) => {
 app.get('/api/dadosEletronicos', async (req, res) => {
   try {
     const client = await pool.connect();
-    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'Eletronicos';");
+    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'Eletrônicos';");
     const produtos = response.rows;
     client.release();
 
