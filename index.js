@@ -33,7 +33,7 @@ app.get('/api/dados', async (req, res) => {
 app.get('/api/dadosAlimentos', async (req, res) => {
   try {
     const client = await pool.connect();
-    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'alimentos';");
+    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'Alimentos';");
     const produtos = response.rows;
     client.release();
 
@@ -47,7 +47,7 @@ app.get('/api/dadosAlimentos', async (req, res) => {
 app.get('/api/dadosRoupas', async (req, res) => {
   try {
     const client = await pool.connect();
-    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'roupas';");
+    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'Roupas';");
     const produtos = response.rows;
     client.release();
 
@@ -61,7 +61,7 @@ app.get('/api/dadosRoupas', async (req, res) => {
 app.get('/api/dadosEletronicos', async (req, res) => {
   try {
     const client = await pool.connect();
-    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'eletronicos';");
+    const response = await client.query("SELECT * FROM produtos WHERE categoria = 'Eletronicos';");
     const produtos = response.rows;
     client.release();
 
